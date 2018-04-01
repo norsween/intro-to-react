@@ -10,15 +10,34 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
      <script type="text/babel">
 
-       function Button() {
-          return (
-             <button>Save</button>
-          );
-       }
+        // create a component react element that takes care of label thru props and
+        // displays number of times button is clicked thru state
+        class Button extends React.Component {
+           constructor(props) {
+              super(props);
+    
+              //components have an internal `this.state` object, set initial value
+              this.state = {
+                 count: 0,
+              };
+           }
 
-       ReactDOM.render(
-         <Button label="Save" />, document.getElementById('app')
-       );
+        // setState updates the state object and re-renders the component automatically
+        increaseCount() {
+           this.setState((prevState) => {
+               return { count: prevState.count + 1 }
+           });
+        }
+  
+        render() {
+           return (<button onClick={() => this.increaseCount()}>
+                       {this.props.label} {this.state.count} times
+                   </button>);
+           }
+        }
+
+        const element = <Button label="Save" />;
+        React.render(element, document.getElementById('app'));
      </script>
   </body>
 </html>
