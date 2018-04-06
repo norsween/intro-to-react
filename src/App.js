@@ -33,12 +33,24 @@ class App extends Component {
     this.setState({ todos: todos });
   }
 
+  deleteTodo(index) {
+    const todos = this.state.todos.slice();
+    const deletedTodo = todos[index];
+
+    // Use filter method to create a new array that doesn't include deleted item
+    const newTodos = this.state.todos.filter(function(todo) { 
+        return todo !== deletedTodo })
+
+    // Re-render the component's state with new todos list 
+    this.setState({ todos: newTodos });
+  }
+
   render() {
     return (
       <div className="App">
         <ul>
           { this.state.todos.map( (todo, index) => 
-             <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } />
+             <ToDo key={ index } description={ todo.description } isCompleted={ todo.isCompleted } toggleComplete={ () => this.toggleComplete(index) } deleteTodo={ () => this.deleteTodo(index) } />
           )}
         </ul>
          <form onSubmit={ (e) => this.handleSubmit(e) }>
